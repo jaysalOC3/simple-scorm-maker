@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="{{ package_id }}" version="1.0" 
+         xmlns="http://www.imsglobal.org/xsd/imscp_v1p1" 
+         xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_v1p3" 
+         xmlns:adlseq="http://www.adlnet.org/xsd/adlseq_v1p3" 
+         xmlns:adlnav="http://www.adlnet.org/xsd/adlnav_v1p3" 
+         xmlns:imsss="http://www.imsglobal.org/xsd/imsss" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://www.imsglobal.org/xsd/imscp_v1p1 imscp_v1p1.xsd 
+                             http://www.adlnet.org/xsd/adlcp_v1p3 adlcp_v1p3.xsd 
+                             http://www.adlnet.org/xsd/adlseq_v1p3 adlseq_v1p3.xsd 
+                             http://www.adlnet.org/xsd/adlnav_v1p3 adlnav_v1p3.xsd 
+                             http://www.imsglobal.org/xsd/imsss imsss_v1p0.xsd">
+  <metadata>
+    <schema>ADL SCORM</schema>
+    <schemaversion>2004 4th Edition</schemaversion>
+    <lom xmlns="http://ltsc.ieee.org/xsd/LOM">
+      <general>
+        <title>
+          <string language="{{ package.language }}">{{ package.title }}</string>
+        </title>
+        <description>
+          <string language="{{ package.language }}">{{ package.description }}</string>
+        </description>
+      </general>
+    </lom>
+  </metadata>
+  <organizations default="{{ organization.identifier }}">
+    <organization identifier="{{ organization.identifier }}">
+      <title>{{ organization.name }}</title>
+      {% for item in content_items %}
+      <item identifier="item_{{ loop.index }}" identifierref="resource_{{ loop.index }}">
+        <title>{{ item.title }}</title>
+        {% if item.required %}
+        <adlcp:completionThreshold>0.9</adlcp:completionThreshold>
+        {% endif %}
+      </item>
+      {% endfor %}
+    </organization>
+  </organizations>
+  <resources>
+    <resource identifier="resource_0" type="webcontent" adlcp:scormType="sco" href="index.html">
+      <file href="index.html"/>
+      <file href="scorm_package/SCORM_API_wrapper.js"/>
+      {% for item in content_items %}
+      {% if item.type == 'pdf' %}
+      <file href="scorm_package/pdf_viewer_wrapper.js"/>
+      {% elif item.type == 'video' %}
+      <file href="scorm_package/video_player_wrapper.js"/>
+      {% elif item.type == 'audio' %}
+      <file href="scorm_package/audio_player_wrapper.js"/>
+      {% endif %}
+      {% endfor %}
+    </resource>
+    {% for item in content_items %}
+    <resource identifier="resource_{{ loop.index }}" type="webcontent" adlcp:scormType="asset" href="{{ item.rel_path }}">
+      <file href="{{ item.rel_path }}"/>
+    </resource>
+    {% endfor %}
+  </resources>
+</manifest>

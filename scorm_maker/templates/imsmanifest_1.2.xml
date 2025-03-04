@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="{{ package_id }}" version="1.0" 
+         xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2" 
+         xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd 
+                             http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd 
+                             http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+  <metadata>
+    <schema>ADL SCORM</schema>
+    <schemaversion>1.2</schemaversion>
+    <lom xmlns="http://www.imsglobal.org/xsd/imsmd_rootv1p2p1">
+      <general>
+        <title>
+          <langstring>{{ package.title }}</langstring>
+        </title>
+        <description>
+          <langstring>{{ package.description }}</langstring>
+        </description>
+      </general>
+    </lom>
+  </metadata>
+  <organizations default="{{ organization.identifier }}">
+    <organization identifier="{{ organization.identifier }}">
+      <title>{{ organization.name }}</title>
+      {% for item in content_items %}
+      <item identifier="item_{{ loop.index }}" identifierref="resource_{{ loop.index }}">
+        <title>{{ item.title }}</title>
+      </item>
+      {% endfor %}
+    </organization>
+  </organizations>
+  <resources>
+    <resource identifier="resource_0" type="webcontent" adlcp:scormtype="sco" href="index.html">
+      <file href="index.html"/>
+      <file href="scorm_package/SCORM_API_wrapper.js"/>
+      {% for item in content_items %}
+      {% if item.type == 'pdf' %}
+      <file href="scorm_package/pdf_viewer_wrapper.js"/>
+      {% elif item.type == 'video' %}
+      <file href="scorm_package/video_player_wrapper.js"/>
+      {% elif item.type == 'audio' %}
+      <file href="scorm_package/audio_player_wrapper.js"/>
+      {% endif %}
+      {% endfor %}
+    </resource>
+    {% for item in content_items %}
+    <resource identifier="resource_{{ loop.index }}" type="webcontent" adlcp:scormtype="asset" href="{{ item.rel_path }}">
+      <file href="{{ item.rel_path }}"/>
+    </resource>
+    {% endfor %}
+  </resources>
+</manifest>

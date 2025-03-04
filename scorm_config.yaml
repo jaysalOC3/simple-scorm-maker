@@ -1,0 +1,65 @@
+# SCORM-Maker Configuration File
+
+# Package metadata
+package:
+  title: "Introduction to Data Science"
+  identifier: "DS101_2023"
+  version: "1.0"
+  language: "en-US"
+  description: "A comprehensive introduction to data science concepts and tools."
+
+# Organization information
+organization:
+  name: "Data Science Academy"
+  identifier: "DSA_2023"
+
+# SCORM standard version (options: "1.2", "2004_3rd", "2004_4th")
+scorm_version: "2004_4th"
+
+# Content completion criteria (options: "all_items", "percentage", "last_item")
+completion_criteria: "percentage"
+# Required if completion_criteria is "percentage"
+completion_percentage: 80
+
+# UI customization
+ui:
+  theme:
+    primary_color: "#3498db"
+    secondary_color: "#2c3e50"
+    text_color: "#333333"
+    background_color: "#ffffff"
+  logo_url: "logo.png"
+  show_progress_bar: true
+  show_table_of_contents: true
+
+# Content items
+content_items:
+  - file: "01_introduction.html"
+    title: "Introduction to Data Science"
+    description: "Overview of data science concepts and applications."
+    required: true
+    
+  - file: "02_data_collection.pdf"
+    title: "Data Collection Methods"
+    description: "Methods and best practices for collecting data."
+    required: true
+    
+  - file: "03_data_cleaning.html"
+    title: "Data Cleaning and Preparation"
+    description: "Techniques for cleaning and preparing data for analysis."
+    required: true
+    
+  - file: "04_visualization.html"
+    title: "Data Visualization"
+    description: "Creating effective visualizations to communicate insights."
+    required: false
+    
+  - file: "05_machine_learning.mp4"
+    title: "Introduction to Machine Learning"
+    description: "Basic concepts of machine learning algorithms."
+    required: true
+    
+  - file: "06_case_study.html"
+    title: "Case Study: Predictive Analytics"
+    description: "Real-world application of data science techniques."
+    required: false

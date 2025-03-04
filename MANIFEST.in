@@ -1,0 +1,4 @@
+include README.md
+include requirements.txt
+include scorm_config.yaml
+recursive-include scorm_maker/templates *
